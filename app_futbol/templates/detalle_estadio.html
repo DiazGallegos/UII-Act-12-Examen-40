@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ estadio.nombre }} | Fútbol Manager{% endblock %}
+
+{% block contenido %}
+<article class="stadium-detail">
+    <div class="stadium-banner">
+        {% if estadio.imagen_estadio %}
+            <img src="{{ estadio.imagen_estadio.url }}" alt="{{ estadio.nombre }}" class="stadium-detail-img">
+        {% else %}
+            <div class="stadium-detail-placeholder">🏟️</div>
+        {% endif %}
+        <div class="stadium-detail-info">
+            <h1>{{ estadio.nombre }}</h1>
+            <h3>📍 {{ estadio.ciudad }}</h3>
+        </div>
+    </div>
+
+    <div class="stadium-specs">
+        <div class="spec-item">
+            <strong>👥 Capacidad:</strong>
+            <span>{{ estadio.capacidad|floatformat:0 }} espectadores</span>
+        </div>
+        <div class="spec-item">
+            <strong>🎉 Inauguración:</strong>
+            <span>{{ estadio.fecha_inaguracion|date:"d/m/Y" }}</span>
+        </div>
+        <div class="spec-item">
+            <strong>🌱 Tipo de Césped:</strong>
+            <span>{{ estadio.get_cesped_natural_display }}</span>
+        </div>
+        <div class="spec-item">
+            <strong>📍 Dirección:</strong>
+            <span>{{ estadio.direccion }}</span>
+        </div>
+    </div>
+
+    <div class="detail-actions">
+        <a href="{% url 'app_futbol:editar_estadio' estadio.id_estadio %}" class="btn btn-secondary">✏️ Editar</a>
+        <a href="{% url 'app_futbol:borrar_estadio' estadio.id_estadio %}" class="btn btn-danger">🗑️ Borrar</a>
+    </div>
+
+    <section class="matches-section">
+        <h2>Partidos en este Estadio</h2>
+        {% if partidos %}
+        <div class="stadium-matches">
+            {% for partido in partidos %}
+            <div class="stadium-match-item">
+                <a href="{% url 'app_futbol:detalle_partido' partido.id_partido %}">
+                    <span class="match-teams">{{ partido.equipo_local }} vs {{ partido.equipo_visitante }}</span>
+                    <span class="match-date">{{ partido.fecha|date:"d/m/Y H:i" }}</span>
+                    <span class="match-result">{{ partido.resultado }}</span>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="empty-message">No hay partidos programados en este estadio.</p>
+        {% endif %}
+    </section>
+</article>
+{% endblock %}

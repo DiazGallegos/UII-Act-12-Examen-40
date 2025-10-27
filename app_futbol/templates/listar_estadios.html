@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block titulo %}Estadios | Fútbol Manager{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <h2>Estadios Registrados</h2>
+    <a href="{% url 'app_futbol:crear_estadio' %}" class="btn btn-primary">🏗️ Agregar Estadio</a>
+</div>
+
+<div class="stadiums-grid">
+    {% for estadio in estadios %}
+    <div class="stadium-card">
+        <a href="{% url 'app_futbol:detalle_estadio' estadio.id_estadio %}">
+            {% if estadio.imagen_estadio %}
+                <img src="{{ estadio.imagen_estadio.url }}" alt="{{ estadio.nombre }}" class="stadium-img">
+            {% else %}
+                <div class="stadium-placeholder">🏟️</div>
+            {% endif %}
+            <div class="stadium-info">
+                <h3>{{ estadio.nombre }}</h3>
+                <p class="stadium-location">📍 {{ estadio.ciudad }}</p>
+                <p class="stadium-capacity">👥 Capacidad: {{ estadio.capacidad|floatformat:0 }}</p>
+                <p class="stadium-grass">🌱 {{ estadio.get_cesped_natural_display }}</p>
+            </div>
+        </a>
+    </div>
+    {% empty %}
+    <div class="no-items">
+        <p>No hay estadios registrados.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

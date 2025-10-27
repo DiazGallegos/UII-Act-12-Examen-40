@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ partido.equipo_local }} vs {{ partido.equipo_visitante }} | Fútbol Manager{% endblock %}
+
+{% block contenido %}
+<article class="match-detail">
+    <div class="match-header">
+        <div class="teams-display">
+            <div class="team-detail local">
+                <h2>{{ partido.equipo_local }}</h2>
+                <div class="score">{{ partido.goles_locales }}</div>
+            </div>
+            <div class="vs-detail">VS</div>
+            <div class="team-detail visitor">
+                <h2>{{ partido.equipo_visitante }}</h2>
+                <div class="score">{{ partido.goles_visitantes }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="match-info-detail">
+        <div class="info-item">
+            <strong>📅 Fecha:</strong>
+            <span>{{ partido.fecha|date:"d/m/Y H:i" }}</span>
+        </div>
+        <div class="info-item">
+            <strong>🏟️ Estadio:</strong>
+            <span><a href="{% url 'app_futbol:detalle_estadio' partido.estadio.id_estadio %}">{{ partido.estadio.nombre }}</a></span>
+        </div>
+        <div class="info-item">
+            <strong>📍 Ubicación:</strong>
+            <span>{{ partido.estadio.ciudad }}</span>
+        </div>
+    </div>
+
+    <div class="detail-actions">
+        <a href="{% url 'app_futbol:editar_partido' partido.id_partido %}" class="btn btn-secondary">✏️ Editar</a>
+        <a href="{% url 'app_futbol:borrar_partido' partido.id_partido %}" class="btn btn-danger">🗑️ Borrar</a>
+    </div>
+</article>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block titulo %}Partidos | Fútbol Manager{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <h2>Partidos Programados</h2>
+    <a href="{% url 'app_futbol:crear_partido' %}" class="btn btn-primary">➕ Agregar Partido</a>
+</div>
+
+<div class="matches-container">
+    {% for partido in partidos %}
+    <div class="match-card">
+        <a href="{% url 'app_futbol:detalle_partido' partido.id_partido %}">
+            <div class="match-teams">
+                <div class="team local-team">
+                    <h3>{{ partido.equipo_local }}</h3>
+                    <span class="goals">{{ partido.goles_locales }}</span>
+                </div>
+                <div class="vs">VS</div>
+                <div class="team visitor-team">
+                    <h3>{{ partido.equipo_visitante }}</h3>
+                    <span class="goals">{{ partido.goles_visitantes }}</span>
+                </div>
+            </div>
+            <div class="match-info">
+                <p>📅 {{ partido.fecha|date:"d/m/Y H:i" }}</p>
+                <p>🏟️ {{ partido.estadio.nombre }}</p>
+            </div>
+        </a>
+    </div>
+    {% empty %}
+    <div class="no-items">
+        <p>No hay partidos programados.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

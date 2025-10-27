@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block titulo %}Eliminar {{ tipo|title }} | Fútbol Manager{% endblock %}
+
+{% block contenido %}
+<div class="confirmation-container">
+    <h2>¿Estás seguro de que quieres borrar {% if tipo == 'partido' %}el partido "{{ objeto.equipo_local }} vs {{ objeto.equipo_visitante }}"{% else %}el estadio "{{ objeto.nombre }}"{% endif %}?</h2>
+    <p>Esta acción no se puede deshacer.</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="actions">
+            <button type="submit" class="btn btn-danger">Sí, Borrar</button>
+            {% if tipo == 'partido' %}
+            <a href="{% url 'app_futbol:detalle_partido' objeto.id_partido %}" class="btn">Cancelar</a>
+            {% else %}
+            <a href="{% url 'app_futbol:detalle_estadio' objeto.id_estadio %}" class="btn">Cancelar</a>
+            {% endif %}
+        </div>
+    </form>
+</div>
+{% endblock %}

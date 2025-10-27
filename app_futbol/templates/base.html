@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Fútbol Manager{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="main-header">
+            <h1><a href="{% url 'app_futbol:listar_partidos' %}">⚽ Fútbol Manager</a></h1>
+            <nav class="main-nav">
+                <a href="{% url 'app_futbol:listar_partidos' %}">📋 Partidos</a>
+                <a href="{% url 'app_futbol:listar_estadios' %}">🏟️ Estadios</a>
+                <a href="{% url 'app_futbol:crear_partido' %}">➕ Nuevo Partido</a>
+                <a href="{% url 'app_futbol:crear_estadio' %}">🏗️ Nuevo Estadio</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            {% block contenido %}{% endblock %}
+        </main>
+
+        <footer class="main-footer">
+            <p>© 2025 Fútbol Manager - Sistema de Gestión de Partidos</p>
+        </footer>
+    </div>
+</body>
+</html>
